@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado VIVA - Estado de mi devolución</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Mercado VIVA</h1>
+    <p>Portal de Devoluciones - Cliente</p>
+  </header>
+
+  <main>
+    <section class="pantalla">
+      <h2>Consultar estado de mi devolución</h2>
+      <form id="form-consulta">
+        <label for="numero-seguimiento">Número de seguimiento</label>
+        <input type="text" id="numero-seguimiento" placeholder="Ej: DEV-37C9AE2BBC" required>
+        <button type="submit">Consultar</button>
+      </form>
+      <p id="consulta-error" class="error" hidden></p>
+      <div id="resultado" class="tarjeta" hidden></div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/portal.js"></script>
+</body>
+</html>
