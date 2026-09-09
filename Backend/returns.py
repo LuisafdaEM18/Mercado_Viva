@@ -103,6 +103,7 @@ def serializar_orden(orden):
         "cliente_documento": orden.cliente_documento,
         "fecha_compra": orden.fecha_compra.isoformat(),
         "estado": orden.estado,
+        "metodo_pago": orden.metodo_pago,
         "items": [
             {
                 "id": item.id,
@@ -125,5 +126,6 @@ def serializar_devolucion(devolucion):
         "monto_reembolso": float(devolucion.monto_reembolso),
         "condicion": devolucion.condicion,
         "motivo": devolucion.motivo,
+        "metodo_pago": devolucion.orden_item.orden.metodo_pago,
         "fecha_registro": devolucion.fecha_registro.isoformat(),
     }

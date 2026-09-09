@@ -42,6 +42,6 @@ def evaluar_elegibilidad(orden, orden_item):
 
 def calcular_resultado_reembolso(orden_item, condicion, mal_uso):
     if condicion == "dañado" and mal_uso:
-        return "rechazado", 0
+        return "pendiente", 0
 
     return "aprobado", float(orden_item.precio_unitario)

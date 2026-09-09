@@ -55,5 +55,5 @@ def test_producto_danado_por_mal_uso_no_genera_reembolso(client, token, orden_el
 
     assert resp.status_code == 201
     body = resp.get_json()
-    assert body["estado_reembolso"] == "rechazado"
+    assert body["estado_reembolso"] == "pendiente"
     assert body["monto_reembolso"] == 0.0

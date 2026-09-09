@@ -34,6 +34,7 @@ with app.app_context():
             cliente_nombre="Laura Gómez",
             fecha_compra=datetime.utcnow() - timedelta(days=5),
             estado="entregada",
+            metodo_pago="Tarjeta de crédito",
         )
         db.session.add(orden)
         db.session.flush()
@@ -48,11 +49,42 @@ with app.app_context():
             cliente_nombre="Carlos Ruiz",
             fecha_compra=datetime.utcnow() - timedelta(days=40),
             estado="entregada",
+            metodo_pago="Tarjeta débito",
         )
         db.session.add(orden_vencida)
         db.session.flush()
         db.session.add(
             OrdenItem(orden_id=orden_vencida.id, producto_id=producto.id, precio_unitario=producto.precio)
+        )
+
+    if not Orden.query.filter_by(numero_orden="ORD-1003").first():
+        orden_fresca = Orden(
+            numero_orden="ORD-1003",
+            cliente_documento="111222333",
+            cliente_nombre="Andres Torres",
+            fecha_compra=datetime.utcnow() - timedelta(days=2),
+            estado="entregada",
+            metodo_pago="Tarjeta de crédito",
+        )
+        db.session.add(orden_fresca)
+        db.session.flush()
+        db.session.add(
+            OrdenItem(orden_id=orden_fresca.id, producto_id=producto.id, precio_unitario=producto.precio)
+        )
+
+    if not Orden.query.filter_by(numero_orden="ORD-1004").first():
+        orden_danada = Orden(
+            numero_orden="ORD-1004",
+            cliente_documento="444555666",
+            cliente_nombre="Sofia Ramirez",
+            fecha_compra=datetime.utcnow() - timedelta(days=1),
+            estado="entregada",
+            metodo_pago="PSE",
+        )
+        db.session.add(orden_danada)
+        db.session.flush()
+        db.session.add(
+            OrdenItem(orden_id=orden_danada.id, producto_id=producto.id, precio_unitario=producto.precio)
         )
 
     db.session.commit()

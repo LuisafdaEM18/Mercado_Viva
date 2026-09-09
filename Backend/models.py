@@ -26,6 +26,7 @@ class Orden(db.Model):
     cliente_nombre = db.Column(db.String(150), nullable=False)
     fecha_compra = db.Column(db.DateTime, nullable=False)
     estado = db.Column(db.String(20), nullable=False, default="entregada")
+    metodo_pago = db.Column(db.String(50), nullable=False, default="Tarjeta de crédito")
 
     items = db.relationship("OrdenItem", backref="orden", lazy=True)
 
