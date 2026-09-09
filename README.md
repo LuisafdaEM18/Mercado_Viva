@@ -7,10 +7,12 @@ MVP que permite a un cliente que compró por el canal digital devolver su produc
 | Componente | URL |
 |---|---|
 | Frontend (Vercel) | https://mercado-viva.vercel.app/ |
-| Backend / API (Render) | https://mercado-viva-backend.onrender.com |
+| Backend / API (Render) | https://mercado-viva-backend.onrender.com/api/health |
 | Base de datos | PostgreSQL gestionado en Neon |
 
-> El backend está en el plan gratuito de Render: si nadie lo usa por un rato "se duerme" y la primera petición puede tardar 30-50 segundos en responder. No es un error.
+> El backend es una API, no un sitio web — no tiene página de inicio. Si entras a `https://mercado-viva-backend.onrender.com/` (sin nada más) verás un error "Not Found", eso es normal. El enlace de la tabla apunta a `/api/health`, que sí responde con `{"status": "ok"}` para confirmar que el servicio está activo.
+>
+> Además, está en el plan gratuito de Render: si nadie lo usa por un rato "se duerme" y la primera petición puede tardar 30-50 segundos en responder. Tampoco es un error.
 
 ## Cómo usar la aplicación
 
