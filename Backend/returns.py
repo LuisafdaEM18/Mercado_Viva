@@ -86,6 +86,15 @@ def registrar_devolucion():
     return jsonify(serializar_devolucion(devolucion)), 201
 
 
+@returns_bp.route("/api/devoluciones/<numero_seguimiento>", methods=["GET"])
+def consultar_devolucion(numero_seguimiento):
+    devolucion = Devolucion.query.filter_by(numero_seguimiento=numero_seguimiento).first()
+    if devolucion is None:
+        return jsonify({"error": "No se encontró una devolución con ese número de seguimiento."}), 404
+
+    return jsonify(serializar_devolucion(devolucion)), 200
+
+
 def serializar_orden(orden):
     return {
         "id": orden.id,
