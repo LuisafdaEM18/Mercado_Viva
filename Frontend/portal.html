@@ -4,17 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mercado VIVA - Estado de mi devolución</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
-    <h1>Mercado VIVA</h1>
-    <p>Portal de Devoluciones - Cliente</p>
+    <div class="marca">
+      <span class="logo-mark">V</span>
+      <div>
+        <h1>Mercado VIVA</h1>
+        <p>Portal de Devoluciones · Cliente</p>
+      </div>
+    </div>
   </header>
 
   <main>
     <section class="pantalla">
       <h2>Consultar estado de mi devolución</h2>
+      <p class="subtitulo">Ingresa el número de seguimiento que recibiste al finalizar tu devolución en tienda.</p>
       <form id="form-consulta">
         <label for="numero-seguimiento">Número de seguimiento</label>
         <input type="text" id="numero-seguimiento" placeholder="Ej: DEV-37C9AE2BBC" required>

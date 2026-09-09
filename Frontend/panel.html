@@ -4,13 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mercado VIVA - Devoluciones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
-    <h1>Mercado VIVA</h1>
-    <p>Panel de Devoluciones - Empleado de tienda</p>
+    <div class="marca">
+      <span class="logo-mark">V</span>
+      <div>
+        <h1>Mercado VIVA</h1>
+        <p>Panel de Devoluciones · Empleado de tienda</p>
+      </div>
+    </div>
   </header>
+
+  <div id="barra-empleado" class="barra-empleado" hidden>
+    <div class="barra-empleado-contenido">
+      <span></span>
+      <div id="perfil-menu" class="perfil-menu">
+        <button id="btn-perfil" type="button" class="perfil-trigger">
+          <span class="avatar-mini">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-1.5A5.5 5.5 0 0 0 14.5 14h-5A5.5 5.5 0 0 0 4 19.5V21"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </span>
+          <span id="empleado-nombre"></span>
+          <svg class="perfil-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+        <div id="perfil-dropdown" class="perfil-dropdown" hidden>
+          <button id="btn-cerrar-sesion" type="button" class="perfil-opcion">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <path d="M16 17l5-5-5-5"/>
+              <path d="M21 12H9"/>
+            </svg>
+            Cerrar sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <main>
     <section id="seccion-login" class="pantalla">
@@ -28,10 +66,6 @@
     </section>
 
     <section id="seccion-buscar" class="pantalla" hidden>
-      <div class="barra-superior">
-        <span id="empleado-nombre"></span>
-        <button id="btn-cerrar-sesion" type="button">Cerrar sesión</button>
-      </div>
       <h2>Buscar orden</h2>
       <form id="form-buscar">
         <label for="buscar-numero-orden">Número de orden</label>
@@ -46,7 +80,12 @@
     </section>
 
     <section id="seccion-registro" class="pantalla" hidden>
-      <button id="btn-volver-buscar" type="button" class="link">&larr; Nueva búsqueda</button>
+      <button id="btn-volver-buscar" type="button" class="volver-boton">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Nueva búsqueda
+      </button>
       <h2>Detalle de la orden</h2>
       <div id="detalle-orden"></div>
 
@@ -77,11 +116,12 @@
       <p id="registro-error" class="error" hidden></p>
     </section>
 
-    <section id="seccion-confirmacion" class="pantalla" hidden>
+    <section id="seccion-confirmacion" class="pantalla pantalla-centrada" hidden>
+      <div id="icono-confirmacion" class="check-exito"></div>
       <h2>Devolución registrada</h2>
       <div id="confirmacion-detalle" class="tarjeta"></div>
       <button id="btn-descargar-comprobante" type="button">Descargar comprobante</button>
-      <button id="btn-nueva-devolucion" type="button">Registrar otra devolución</button>
+      <button id="btn-nueva-devolucion" type="button" class="secundario">Registrar otra devolución</button>
     </section>
   </main>
 

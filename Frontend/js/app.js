@@ -19,6 +19,32 @@ const pantallas = {
 function mostrarPantalla(nombre) {
   Object.values(pantallas).forEach((el) => (el.hidden = true));
   pantallas[nombre].hidden = false;
+  document.getElementById("barra-empleado").hidden = nombre === "login";
+  document.getElementById("perfil-menu").classList.remove("abierto");
+  document.getElementById("perfil-dropdown").hidden = true;
+}
+
+function guardarSesion() {
+  sessionStorage.setItem("viva_sesion", JSON.stringify({ token, nombre: empleadoNombre }));
+}
+
+function cargarSesion() {
+  const guardada = sessionStorage.getItem("viva_sesion");
+  if (!guardada) return false;
+
+  try {
+    const datos = JSON.parse(guardada);
+    token = datos.token;
+    empleadoNombre = datos.nombre;
+    document.getElementById("empleado-nombre").textContent = `Empleado: ${empleadoNombre}`;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function borrarSesion() {
+  sessionStorage.removeItem("viva_sesion");
 }
 
 function mostrarError(elementoId, mensaje) {
@@ -29,6 +55,16 @@ function mostrarError(elementoId, mensaje) {
 
 function ocultarError(elementoId) {
   document.getElementById(elementoId).hidden = true;
+}
+
+function activarCarga(boton) {
+  boton.disabled = true;
+  boton.classList.add("cargando");
+}
+
+function desactivarCarga(boton) {
+  boton.disabled = false;
+  boton.classList.remove("cargando");
 }
 
 async function llamarApi(ruta, opciones = {}) {
@@ -50,6 +86,8 @@ document.getElementById("form-login").addEventListener("submit", async (e) => {
 
   const username = document.getElementById("login-username").value.trim();
   const password = document.getElementById("login-password").value;
+  const boton = e.target.querySelector("button[type=submit]");
+  activarCarga(boton);
 
   try {
     const data = await llamarApi("/api/auth/login", {
@@ -59,16 +97,31 @@ document.getElementById("form-login").addEventListener("submit", async (e) => {
     token = data.token;
     empleadoNombre = data.nombre;
     document.getElementById("empleado-nombre").textContent = `Empleado: ${empleadoNombre}`;
+    guardarSesion();
     document.getElementById("form-login").reset();
     mostrarPantalla("buscar");
   } catch (err) {
     mostrarError("login-error", err.message);
+  } finally {
+    desactivarCarga(boton);
   }
+});
+
+document.getElementById("btn-perfil").addEventListener("click", (e) => {
+  e.stopPropagation();
+  document.getElementById("perfil-menu").classList.toggle("abierto");
+  document.getElementById("perfil-dropdown").hidden = !document.getElementById("perfil-menu").classList.contains("abierto");
+});
+
+document.addEventListener("click", () => {
+  document.getElementById("perfil-menu").classList.remove("abierto");
+  document.getElementById("perfil-dropdown").hidden = true;
 });
 
 document.getElementById("btn-cerrar-sesion").addEventListener("click", () => {
   token = null;
   empleadoNombre = null;
+  borrarSesion();
   mostrarPantalla("login");
 });
 
@@ -88,6 +141,9 @@ document.getElementById("form-buscar").addEventListener("submit", async (e) => {
   if (numeroOrden) params.set("numero_orden", numeroOrden);
   if (documento) params.set("documento", documento);
 
+  const boton = e.target.querySelector("button[type=submit]");
+  activarCarga(boton);
+
   try {
     const orden = await llamarApi(`/api/ordenes?${params.toString()}`);
     renderizarOrden(orden);
@@ -95,6 +151,8 @@ document.getElementById("form-buscar").addEventListener("submit", async (e) => {
     mostrarPantalla("registro");
   } catch (err) {
     mostrarError("buscar-error", err.message);
+  } finally {
+    desactivarCarga(boton);
   }
 });
 
@@ -142,6 +200,8 @@ function renderizarOrden(orden) {
 
   document.querySelectorAll(".btn-elegir-item").forEach((btn) => {
     btn.addEventListener("click", () => {
+      document.querySelectorAll(".item-orden").forEach((el) => el.classList.remove("seleccionado"));
+      btn.closest(".item-orden").classList.add("seleccionado");
       document.getElementById("devolucion-item-id").value = btn.dataset.itemId;
       formDevolucion.hidden = false;
       formDevolucion.scrollIntoView({ behavior: "smooth" });
@@ -163,6 +223,8 @@ document.getElementById("form-devolucion").addEventListener("submit", async (e) 
   const motivo = document.getElementById("devolucion-motivo").value.trim();
   const condicion = document.getElementById("devolucion-condicion").value;
   const malUso = document.getElementById("devolucion-mal-uso").checked;
+  const boton = e.target.querySelector("button[type=submit]");
+  activarCarga(boton);
 
   try {
     const devolucion = await llamarApi("/api/devoluciones", {
@@ -174,11 +236,19 @@ document.getElementById("form-devolucion").addEventListener("submit", async (e) 
     mostrarPantalla("confirmacion");
   } catch (err) {
     mostrarError("registro-error", err.message);
+  } finally {
+    desactivarCarga(boton);
   }
 });
 
+const ICONO_ESTADO = { aprobado: "✓", pendiente: "⏳", rechazado: "✕" };
+
 function mostrarConfirmacion(devolucion) {
   devolucionActual = devolucion;
+  const iconoEl = document.getElementById("icono-confirmacion");
+  iconoEl.textContent = ICONO_ESTADO[devolucion.estado_reembolso];
+  iconoEl.className = `check-exito ${devolucion.estado_reembolso}`;
+
   const contenedor = document.getElementById("confirmacion-detalle");
 
   contenedor.innerHTML = `
@@ -227,3 +297,7 @@ document.getElementById("btn-volver-buscar").addEventListener("click", () => {
 document.getElementById("btn-nueva-devolucion").addEventListener("click", () => {
   mostrarPantalla("buscar");
 });
+
+if (cargarSesion()) {
+  mostrarPantalla("buscar");
+}

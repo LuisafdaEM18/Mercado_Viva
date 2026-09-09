@@ -7,6 +7,9 @@ document.getElementById("form-consulta").addEventListener("submit", async (e) =>
   resultadoEl.hidden = true;
 
   const numeroSeguimiento = document.getElementById("numero-seguimiento").value.trim();
+  const boton = e.target.querySelector("button[type=submit]");
+  boton.disabled = true;
+  boton.classList.add("cargando");
 
   try {
     const respuesta = await fetch(`${API_BASE_URL}/api/devoluciones/${encodeURIComponent(numeroSeguimiento)}`);
@@ -20,6 +23,9 @@ document.getElementById("form-consulta").addEventListener("submit", async (e) =>
   } catch (err) {
     errorEl.textContent = err.message;
     errorEl.hidden = false;
+  } finally {
+    boton.disabled = false;
+    boton.classList.remove("cargando");
   }
 });
 

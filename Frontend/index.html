@@ -4,25 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mercado VIVA - Devoluciones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
-    <h1>Mercado VIVA</h1>
-    <p>Devolución de una compra digital en tienda física</p>
+    <div class="marca">
+      <span class="logo-mark">V</span>
+      <div>
+        <h1>Mercado VIVA</h1>
+        <p>Devolución de una compra digital en tienda física</p>
+      </div>
+    </div>
   </header>
 
   <main>
     <section class="pantalla">
-      <h2>¿Quién eres?</h2>
+      <h2>Bienvenido a Mercado VIVA</h2>
+      <p class="subtitulo">Elige tu perfil para continuar.</p>
       <div class="selector-rol">
         <a href="panel.html" class="tarjeta-rol">
+          <span class="avatar-rol">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-1.5A5.5 5.5 0 0 0 14.5 14h-5A5.5 5.5 0 0 0 4 19.5V21"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </span>
           <h3>Soy empleado de tienda</h3>
           <p>Buscar una orden y registrar una devolución.</p>
+          <span class="continuar">
+            Continuar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
         </a>
         <a href="portal.html" class="tarjeta-rol">
+          <span class="avatar-rol">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-1.5A5.5 5.5 0 0 0 14.5 14h-5A5.5 5.5 0 0 0 4 19.5V21"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </span>
           <h3>Soy cliente</h3>
           <p>Consultar el estado de mi devolución.</p>
+          <span class="continuar">
+            Continuar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
         </a>
       </div>
     </section>
