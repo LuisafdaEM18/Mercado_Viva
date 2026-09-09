@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado VIVA - Devoluciones</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Mercado VIVA</h1>
+    <p>Panel de Devoluciones - Empleado de tienda</p>
+  </header>
+
+  <main>
+    <section id="seccion-login" class="pantalla">
+      <h2>Iniciar sesión</h2>
+      <form id="form-login">
+        <label for="login-username">Usuario</label>
+        <input type="text" id="login-username" required>
+
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" required>
+
+        <button type="submit">Ingresar</button>
+      </form>
+      <p id="login-error" class="error" hidden></p>
+    </section>
+
+    <section id="seccion-buscar" class="pantalla" hidden>
+      <div class="barra-superior">
+        <span id="empleado-nombre"></span>
+        <button id="btn-cerrar-sesion" type="button">Cerrar sesión</button>
+      </div>
+      <h2>Buscar orden</h2>
+      <form id="form-buscar">
+        <label for="buscar-numero-orden">Número de orden</label>
+        <input type="text" id="buscar-numero-orden" placeholder="Ej: ORD-1001">
+
+        <label for="buscar-documento">Documento del cliente</label>
+        <input type="text" id="buscar-documento" placeholder="Ej: 123456789">
+
+        <button type="submit">Buscar</button>
+      </form>
+      <p id="buscar-error" class="error" hidden></p>
+    </section>
+
+    <section id="seccion-registro" class="pantalla" hidden>
+      <button id="btn-volver-buscar" type="button" class="link">&larr; Nueva búsqueda</button>
+      <h2>Detalle de la orden</h2>
+      <div id="detalle-orden"></div>
+
+      <form id="form-devolucion" hidden>
+        <h3>Registrar devolución</h3>
+        <input type="hidden" id="devolucion-item-id">
+
+        <label for="devolucion-motivo">Motivo</label>
+        <textarea id="devolucion-motivo" required></textarea>
+
+        <label for="devolucion-condicion">Condición del producto</label>
+        <select id="devolucion-condicion" required>
+          <option value="">Selecciona una opción</option>
+          <option value="nuevo">Nuevo</option>
+          <option value="abierto">Abierto</option>
+          <option value="dañado">Dañado</option>
+        </select>
+
+        <div id="devolucion-mal-uso-wrapper" hidden>
+          <label>
+            <input type="checkbox" id="devolucion-mal-uso">
+            El daño fue causado por mal uso del cliente
+          </label>
+        </div>
+
+        <button type="submit">Confirmar devolución</button>
+      </form>
+      <p id="registro-error" class="error" hidden></p>
+    </section>
+
+    <section id="seccion-confirmacion" class="pantalla" hidden>
+      <h2>Devolución registrada</h2>
+      <div id="confirmacion-detalle" class="tarjeta"></div>
+      <button id="btn-descargar-comprobante" type="button">Descargar comprobante</button>
+      <button id="btn-nueva-devolucion" type="button">Registrar otra devolución</button>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -23,17 +23,20 @@ document.getElementById("form-consulta").addEventListener("submit", async (e) =>
   }
 });
 
+const ESTADO_TEXTO = {
+  aprobado: "Aprobada — tu reembolso fue procesado",
+  pendiente: "Pendiente — el producto dañado está en revisión manual",
+  rechazado: "Rechazada — no genera reembolso",
+};
+
 function mostrarResultado(devolucion) {
   const resultadoEl = document.getElementById("resultado");
-  const estadoTexto = {
-    aprobado: "Aprobada — tu reembolso fue procesado",
-    rechazado: "Rechazada — no genera reembolso",
-  }[devolucion.estado_reembolso];
 
   resultadoEl.innerHTML = `
     <p><strong>Número de seguimiento:</strong> ${devolucion.numero_seguimiento}</p>
-    <p><strong>Estado:</strong> ${estadoTexto}</p>
+    <p><strong>Estado:</strong> ${ESTADO_TEXTO[devolucion.estado_reembolso]}</p>
     <p><strong>Monto del reembolso:</strong> $${devolucion.monto_reembolso.toLocaleString("es-CO")}</p>
+    <p><strong>Método de pago original:</strong> ${devolucion.metodo_pago}</p>
     <p><strong>Fecha de registro:</strong> ${new Date(devolucion.fecha_registro).toLocaleDateString("es-CO")}</p>
   `;
   resultadoEl.hidden = false;

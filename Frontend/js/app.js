@@ -1,5 +1,13 @@
 let token = null;
 let empleadoNombre = null;
+let ordenActual = null;
+let devolucionActual = null;
+
+const ESTADO_TEXTO = {
+  aprobado: "Aprobada — el reembolso fue procesado",
+  pendiente: "Pendiente — el producto dañado está en revisión manual",
+  rechazado: "Rechazada — no genera reembolso",
+};
 
 const pantallas = {
   login: document.getElementById("seccion-login"),
@@ -91,6 +99,7 @@ document.getElementById("form-buscar").addEventListener("submit", async (e) => {
 });
 
 function renderizarOrden(orden) {
+  ordenActual = orden;
   const contenedor = document.getElementById("detalle-orden");
   const formDevolucion = document.getElementById("form-devolucion");
   formDevolucion.hidden = true;
@@ -126,6 +135,7 @@ function renderizarOrden(orden) {
     <p><strong>Cliente:</strong> ${orden.cliente_nombre} (${orden.cliente_documento})</p>
     <p><strong>Fecha de compra:</strong> ${new Date(orden.fecha_compra).toLocaleDateString("es-CO")}</p>
     <p><strong>Estado:</strong> ${orden.estado}</p>
+    <p><strong>Método de pago:</strong> ${orden.metodo_pago}</p>
     <h3>Ítems</h3>
     ${itemsHtml}
   `;
@@ -168,18 +178,47 @@ document.getElementById("form-devolucion").addEventListener("submit", async (e) 
 });
 
 function mostrarConfirmacion(devolucion) {
+  devolucionActual = devolucion;
   const contenedor = document.getElementById("confirmacion-detalle");
-  const estadoTexto = {
-    aprobado: "Aprobada — el reembolso fue procesado",
-    rechazado: "Rechazada — no genera reembolso",
-  }[devolucion.estado_reembolso];
 
   contenedor.innerHTML = `
     <p><strong>Número de seguimiento:</strong> ${devolucion.numero_seguimiento}</p>
-    <p><strong>Estado:</strong> ${estadoTexto}</p>
+    <p><strong>Estado:</strong> ${ESTADO_TEXTO[devolucion.estado_reembolso]}</p>
     <p><strong>Monto del reembolso:</strong> $${devolucion.monto_reembolso.toLocaleString("es-CO")}</p>
+    <p><strong>Método de pago original:</strong> ${devolucion.metodo_pago}</p>
   `;
 }
+
+function generarTextoComprobante(orden, devolucion) {
+  return [
+    "MERCADO VIVA - COMPROBANTE DE DEVOLUCION",
+    "==========================================",
+    `Numero de seguimiento: ${devolucion.numero_seguimiento}`,
+    `Fecha de registro: ${new Date(devolucion.fecha_registro).toLocaleString("es-CO")}`,
+    "",
+    `Orden: ${orden.numero_orden}`,
+    `Cliente: ${orden.cliente_nombre} (${orden.cliente_documento})`,
+    "",
+    `Motivo: ${devolucion.motivo}`,
+    `Condicion del producto: ${devolucion.condicion}`,
+    `Estado del reembolso: ${ESTADO_TEXTO[devolucion.estado_reembolso]}`,
+    `Monto del reembolso: $${devolucion.monto_reembolso.toLocaleString("es-CO")}`,
+    `Metodo de pago original: ${devolucion.metodo_pago}`,
+  ].join("\n");
+}
+
+document.getElementById("btn-descargar-comprobante").addEventListener("click", () => {
+  const texto = generarTextoComprobante(ordenActual, devolucionActual);
+  const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  const enlace = document.createElement("a");
+  enlace.href = url;
+  enlace.download = `comprobante-${devolucionActual.numero_seguimiento}.txt`;
+  enlace.click();
+
+  URL.revokeObjectURL(url);
+});
 
 document.getElementById("btn-volver-buscar").addEventListener("click", () => {
   mostrarPantalla("buscar");

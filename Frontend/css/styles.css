@@ -138,3 +138,40 @@ button.link {
   border-radius: 6px;
   padding: 16px;
 }
+
+.selector-rol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.tarjeta-rol {
+  display: block;
+  border: 1px solid var(--color-secundario);
+  border-radius: 8px;
+  padding: 20px;
+  text-decoration: none;
+  color: var(--color-texto);
+  transition: background 0.15s ease;
+}
+
+.tarjeta-rol:hover {
+  background: var(--color-fondo);
+}
+
+.tarjeta-rol h3 {
+  color: var(--color-primario);
+  margin: 0 0 8px;
+}
+
+.tarjeta-rol p {
+  margin: 0;
+  font-size: 14px;
+  color: #5C5470;
+}
+
+@media (max-width: 480px) {
+  .selector-rol {
+    grid-template-columns: 1fr;
+  }
+}
